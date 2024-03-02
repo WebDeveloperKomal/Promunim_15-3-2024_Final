@@ -21,6 +21,7 @@ export class AllInteractionsComponent {
   page = 1;
   pageSize = 10 ;
   AllInteractionList: AllInteractionModel[] = [];
+  originalInteractionList : AllInteractionModel[] = [] ;
   currentPage: number = 1;
   // countries: AllTransactionModel[] | undefined;
   collectionSize =0;
@@ -53,7 +54,8 @@ onSubmit(){
   this.showtable =! this.showtable;
   this.apiService.allInteractionReport(this.InteractionForm.value).subscribe(
     (responce:any)=>{
-      this.AllInteractionList=responce.data;
+      this.originalInteractionList=responce.data;
+      this.AllInteractionList = this.originalInteractionList
       console.log('val',responce.data);
       this.collectionSize = responce.data.length
     },
@@ -65,8 +67,8 @@ onSubmit(){
 
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.AllInteractionList];
-  this.AllInteractionList = filteredData.filter((data) =>
+  // const filteredData = [...this.AllInteractionList];
+  this.AllInteractionList = this.originalInteractionList.filter((data) =>
     data.empName.toLowerCase().includes(searchString) ||
     data.followupByWhom.toLowerCase().includes(searchString) ||
     data.custName.toLowerCase().includes(searchString) ||

@@ -19,7 +19,7 @@ export class ComplianceComponent {
   countries: ComplianceModel[] | undefined;
   collectionSize =100;
   complianceList:ComplianceModel[]=[];
-
+  OriginalcomplianceList:ComplianceModel[]=[];
     
   permissions: any;
   Perstring:any;
@@ -51,15 +51,20 @@ export class ComplianceComponent {
       console.log('No permissions data found in local storage.');
     };
 
+    this.allCompliance();
+  }
+
+  allCompliance(){
     this.apiService.allCompliances().subscribe(
-      (res:any)=>{this.complianceList=res.data;
+      (res:any)=>{
+        this.OriginalcomplianceList=res.data;
+       this.complianceList = this.OriginalcomplianceList ;
         this.collectionSize = this.complianceList.length;
       },
       (error:any)=>{console.error(error);
       }
     )
   }
-
 
   edit(id:number){
     this.router.navigate([`/set/view-compliance/`+id]);
@@ -100,13 +105,9 @@ export class ComplianceComponent {
   }
 
   applyFilter(): void {
-    if (!this.SearchText) {
-      
-      this.complianceList = [...this.complianceList];
-      return;
-    }
+    
     const searchString = this.SearchText.toLowerCase();
-    this.complianceList = this.complianceList.filter((data) =>
+    this.complianceList = this.OriginalcomplianceList.filter((data) =>
       data.complianceName.toLowerCase().includes(searchString) ||
       data.taxLink.toLowerCase().includes(searchString) ||
       data.complianceDueDate.toLowerCase().includes(searchString)||

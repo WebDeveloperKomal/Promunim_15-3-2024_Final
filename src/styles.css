@@ -1,3 +1,4 @@
+@import '../node_modules/@syncfusion/ej2-material-theme/styles/material.css';
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
 body {
@@ -65,5 +66,7 @@ body {
     rder-color: rgba(var(--bs-secondary-rgb),var(--bs-border-opacity))!important; */
 }
 
+@import '../node_modules/@syncfusion/ej2-material-theme/styles/material.css'
 
+@import '../node_modules/@syncfusion/ej2-angular-diagrams/styles/material.css' 
 

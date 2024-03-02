@@ -79,6 +79,9 @@ import { AuthInterceptorProviders } from './auth.interceptor';
 import{CarouselModule} from 'ngx-bootstrap/carousel'
 import { DatePipe } from '@angular/common';
 import { ViewCustomerDetailsNewComponent } from './view-customer-details-new/view-customer-details-new.component';
+import {DiagramModule} from '@syncfusion/ej2-angular-diagrams';
+import { DemoComponent } from './demo/demo.component';
+import { ScheduleModule, RecurrenceEditorModule, DayService , WeekService,WorkWeekService,MonthService,MonthAgendaService, DragAndDropService, ResizeService, YearService } from '@syncfusion/ej2-angular-schedule'
 
 @NgModule({
   declarations: [
@@ -151,6 +154,7 @@ import { ViewCustomerDetailsNewComponent } from './view-customer-details-new/vie
     LoginComponent,
     ViewBranchComponent,
     ViewCustomerDetailsNewComponent,
+    DemoComponent,
    
   ],
   imports: [
@@ -159,10 +163,12 @@ import { ViewCustomerDetailsNewComponent } from './view-customer-details-new/vie
     FormsModule,
     ReactiveFormsModule,
     NgbModule,HttpClientModule,
-    CarouselModule.forRoot()
+    CarouselModule.forRoot(),
+    DiagramModule,
+    ScheduleModule, RecurrenceEditorModule
     // NgbModule.forRoot()
   ],
-  providers: [AuthInterceptorProviders,DatePipe],
+  providers: [AuthInterceptorProviders,DatePipe ,DayService , WeekService,WorkWeekService, MonthService,MonthAgendaService, DragAndDropService, ResizeService,YearService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <div class="row">
         <div class="col">
             <nav aria-label="breadcrumb">
@@ -481,95 +481,6 @@
              </div>
 
 
-<!-- 
-              <div class="tab-pane" [class.active]="activeTab === 'tab5'" id="tab5"  >
-                <div id="addNewTask">
-                  <button type="button" ng-click="openCalendar()" class="btn btn-info" style="float: right;">View
-                      Calendar</button>
-
-                  <form
-                      class="form-horizontal col-md-12 col-sm-12 col-xs-12 ng-pristine ng-invalid ng-invalid-required"
-                      method="post" style="padding-top: 20px;">
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                          <div class="form-group">
-                              <label for="idate" class="col-sm-4 control-label">Task Date: *</label>
-                              <div class="col-sm-8">
-                                  <input type="date" id="taskDate"
-                                      class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required"
-                                      ng-model="task.taskDate" required="">
-                              </div>
-                          </div>
-                      </div>
-
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                          <div class="form-group">
-                              <label for="idate" class="col-sm-4 control-label">Due Date: *</label>
-                              <div class="col-sm-8">
-                                  <input type="date" id="dueDate"
-                                      class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required"
-                                      ng-model="task.dueDate" required="">
-                              </div>
-                          </div>
-                      </div>
-
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                          <div class="form-group">
-                              <label class="col-sm-4 control-label">Description*
-                              </label>
-                              <div class="col-sm-8">
-                                  <textarea rows="4"
-                                      class="form-control col-md-10 col-xs-12 ng-pristine ng-untouched ng-valid"
-                                      id="description" ng-model="task.description"></textarea>
-                              </div>
-                          </div>
-                      </div>
-                   
-
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                          <div class="form-group">
-                              <label class="col-sm-4 control-label">Assign To*
-                              </label>
-                              <div class="col-sm-8">
-                                  <select class="form-control select ng-pristine ng-untouched ng-valid"
-                                      ng-model="task.employeeId">
-                                      <option value="" selected="selected">-- SELF --</option>
-                                     
-                                  </select>
-                              </div>
-                          </div>
-                      </div>
-
-                      <div class="col-md-6 col-sm-6 col-xs-12">
-                          <div class="form-group">
-                              <label class="col-sm-4 control-label">Type
-                              </label>
-                              <div class="col-sm-8">
-                                  <select class="form-control select ng-pristine ng-untouched ng-valid"
-                                      ng-model="task.type">
-                                      <option value="TASK">TASK</option>
-                                      <option value="APPOINTMENT">APPOINTMENT</option>
-                                  </select>
-                              </div>
-                          </div>
-                      </div>
-
-                      <div class="clearfix form-actions col-md-12 col-sm-12 col-xs-12">
-                          <div class="col-md-offset-3 col-md-9">
-                              <input type="submit" class="btn btn-info" ng-click="saveTask()">
-                              &nbsp; &nbsp; &nbsp;
-                              <button class="btn" type="reset">
-                                  Reset
-                              </button>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-
-              </div> -->
-
-
-
-
 
 
 
@@ -579,7 +490,14 @@
 
          
       </div>
+   -->
+   <!-- [views]="setViews" (actionComplete)="onActionComplete($event)" -->
+ <ejs-schedule (actionComplete)="onActionComplete($event)" [editorTemplate]="editorTemplate">
+<e-views>
+  <e-view option="Day" class="eview"></e-view>
+  <e-view option="Week" class="eview"></e-view>
+  <e-view option="Month" class="eview"></e-view>
+  <e-view option="Year" class="eview"></e-view>
+</e-views>
   
-
-
-                      
+ </ejs-schedule>

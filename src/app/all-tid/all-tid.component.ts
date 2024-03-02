@@ -20,6 +20,7 @@ export class AllTIDComponent {
   countries: AllTIDModel[] | undefined;
   collectionSize =100;
   TIDList:AllTIDModel[] = [];
+  originalTIDList : AllTIDModel[] = [] ;
   branches:BranchModel[]=[];
   tidForm !: FormGroup;
 
@@ -63,7 +64,8 @@ export class AllTIDComponent {
     this.service.allTID().subscribe(
       ( data: any) => {
 
-        this.TIDList=data.data;
+        this.originalTIDList=data.data;
+        this.TIDList = this.originalTIDList
         console.log('Response successful!',data.data);
         this.collectionSize = data.data.length;
       },
@@ -122,8 +124,8 @@ export class AllTIDComponent {
 
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.TIDList];
-  this.TIDList = filteredData.filter((data) =>
+  // const filteredData = [...this.TIDList];
+  this.TIDList = this.originalTIDList.filter((data) =>
   (data.courierId !== null && !isNaN(data.courierId) && data.courierId.toString().includes(searchString)) ||
   (data.dateOfGeneration !== null && !isNaN(data.dateOfGeneration) && data.dateOfGeneration.toString().includes(searchString)) ||
   (data.aofNo !== null && !isNaN(data.aofNo) && data.aofNo.toString().includes(searchString)) ||

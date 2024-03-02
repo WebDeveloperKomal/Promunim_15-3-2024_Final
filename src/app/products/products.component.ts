@@ -20,7 +20,7 @@ export class ProductsComponent {
   collectionSize =100;
   userRole:any;
   productList:ProductsModel[]=[];
-
+ OriginalproductList : ProductsModel[] = [] ;
   permissions: any;
   Perstring:any;
   insertproducts!:boolean;
@@ -50,9 +50,15 @@ export class ProductsComponent {
       console.log('No permissions data found in local storage.');
     };
 
+    this.allproduct();
+  }
+
+
+  allproduct(){
     this.apiservice.allProducts().subscribe(
       (response:any)=>{
-        this.productList = response.data;
+        this.OriginalproductList = response.data;
+        this.productList = this.OriginalproductList ;
         this.collectionSize = response.data.length;
       },
       (error:any)=>{
@@ -61,7 +67,6 @@ export class ProductsComponent {
       }
     )
   }
-
   edit(id:number){
     this.router.navigate(['/set/view-product/'+id]);
   }
@@ -101,13 +106,9 @@ export class ProductsComponent {
   }
 
   applyFilter(): void {
-    if (!this.SearchText) {
-      
-      this.productList = [...this.productList];
-      return;
-    }
+   
     const searchString = this.SearchText.toLowerCase();
-    this.productList = this.productList.filter((data) =>
+    this.productList = this.OriginalproductList.filter((data) =>
       data.productName.toLowerCase().includes(searchString) ||
       (data.productId !== null && !isNaN(data.productId) && data.productId.toString().includes(searchString)) ||
       (data.minValue !== null && !isNaN(data.minValue) && data.minValue.toString().includes(searchString)) ||

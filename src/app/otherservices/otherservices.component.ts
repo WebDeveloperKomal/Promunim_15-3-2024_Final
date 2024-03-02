@@ -19,6 +19,7 @@ export class OtherservicesComponent {
   countries: OtherServicesModel [] | undefined;
   collectionSize =100;
   servicesList:OtherServicesModel[]=[];
+  OriginalservicesList : OtherServicesModel[] = [] ;
 
     
   permissions: any;
@@ -50,9 +51,18 @@ export class OtherservicesComponent {
       console.log('No permissions data found in local storage.');
     };
 
+
+    this.allOtherservices() ;
+
+  
+  }
+
+
+  allOtherservices(){
     this.apiService.allOtherServices().subscribe(
       (response:any)=>{
-        this.servicesList = response.data;
+        this.OriginalservicesList = response.data;
+        this.servicesList = this.OriginalservicesList ;
         this.collectionSize = response.data.length ;
       },
       (error:any)=>{
@@ -60,7 +70,6 @@ export class OtherservicesComponent {
       }
     )
   }
-
 
   edit(id:number){
     this.router.navigate(['/set/view-other-services/'+id]);
@@ -105,8 +114,8 @@ export class OtherservicesComponent {
 
   applyFilter(): void {
     const searchString = this.SearchText.toLowerCase();
-    const filteredData = [...this.servicesList];
-    this.servicesList = filteredData.filter((data) =>
+    // const filteredData = [...this.servicesList];
+    this.servicesList = this.OriginalservicesList.filter((data) =>
       data.serviceName.toLowerCase().includes(searchString) ||
       data.description.toLowerCase().includes(searchString) ||
       (data.fees !== null && !isNaN(data.fees) && data.fees.toString().includes(searchString)) ||

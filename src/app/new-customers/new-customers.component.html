@@ -647,7 +647,7 @@ value="Add New Customer" >
                 Showing {{(page - 1) * pageSize + 1}} to {{(page * pageSize < temCustomerList.length) ? page * pageSize :
                   temCustomerList.length}} of {{temCustomerList.length}} entries </div>
                   <ngb-pagination  [collectionSize]="collectionSize" [(page)]="page"
-                  [pageSize]="pageSize"
+                  [pageSize]="pageSize" [maxSize]="5"
                     aria-label="Default pagination"></ngb-pagination>
 
               </div>

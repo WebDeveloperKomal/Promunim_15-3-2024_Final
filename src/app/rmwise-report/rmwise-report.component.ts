@@ -18,6 +18,7 @@ export class RMWiseReportComponent {
   page = 1;
   pageSize = 10 ;
   RmwiseReport: RmWiseModel[] = [];
+  originalRmwiseReport : RmWiseModel[] = [] ;
   currentPage: number = 1;
   // countries: RmWiseModel[] | undefined;
   collectionSize = 0;
@@ -27,7 +28,8 @@ export class RMWiseReportComponent {
 ngOnInit(){
   this.apiService.allrmwisereport().subscribe(
     (responce:any)=>{
-      this.RmwiseReport = responce.rmWiseReportData ;
+      this.originalRmwiseReport = responce.rmWiseReportData ;
+      this.RmwiseReport = this.originalRmwiseReport ;
       console.log('val', responce.rmWiseReportData);
       // console.log('val', responce[0].rmName);
       
@@ -40,10 +42,14 @@ ngOnInit(){
 }
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.RmwiseReport];
-  this.RmwiseReport = filteredData.filter((data) =>
+  // const filteredData = [...this.RmwiseReport];
+  this.RmwiseReport = this.originalRmwiseReport.filter((data) =>
     // data.portfolioValue.toLowerCase().includes(searchString) ||
-    data.rmName.toLowerCase().includes(searchString) 
+    data.rmName.toLowerCase().includes(searchString) ||
+    (data.customerCount !== null && !isNaN(data.customerCount) && data.customerCount.toString().includes(searchString)) ||
+    (data.portfolioValue[0] !== null && !isNaN(data.portfolioValue[0]) && data.portfolioValue[0].toString().includes(searchString)) ||
+    (data.portfolioValue[1] !== null && !isNaN(data.portfolioValue[1]) && data.portfolioValue[1].toString().includes(searchString)) 
+
   
   );
 }

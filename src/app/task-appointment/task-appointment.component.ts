@@ -1,101 +1,132 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TaskAppointmentModel } from './task-appointment.component.model';
 import { FormGroup } from '@angular/forms';
+import { ActionEventArgs, EventSettingsModel, View } from '@syncfusion/ej2-angular-schedule';
+import{L10n} from '@syncfusion/ej2-base'
+import { ApiService } from '../api.service';
+import Swal from 'sweetalert2';
 
+L10n.load({
+  'en-US' : {
+    'schedule' : {
+      'saveButton' : 'Add' ,
+      'cancelButton' : 'Close',
+      'newEvent' : 'Add Task'
+    }
+  }
+})
 @Component({
   selector: 'app-task-appointment',
   templateUrl: './task-appointment.component.html',
   styleUrls: ['./task-appointment.component.css']
 })
 export class TaskAppointmentComponent {
-  employeeForm !: FormGroup;
-  SearchText : any ;
-  branchid : number | undefined;
-  branchname : any;
-  branchcode: any;
-  branchcity: any;
-  branchaddress : any;
-  page = 1;
-  pageSize = 10 ;
-  dataarray: TaskAppointmentModel[] = [];
-  currentPage: number = 1;
-  countries: TaskAppointmentModel[] | undefined;
-  collectionSize =100;
-  activeTab: string = 'tab1';
-  constructor() {
-  this.dataarray = [
-    {branchid : 'Admin', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ABM-STARTUP PORTFOLIO RELATIONSHIP MANAGER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'BRANCH MANAGER-ENTERPRISE PORTFOLIO RELATIONSHIP MANAGER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'BRANCH OPERATIONS MANAGER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ACCOUNT ACTIVATION OFFICER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ACCOUNT ACTIVATION OFFICER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ACCOUNT ACTIVATION OFFICER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ACCOUNT ACTIVATION OFFICER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ABM-STARTUP PORTFOLIO RELATIONSHIP MANAGER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ABM-STARTUP PORTFOLIO RELATIONSHIP MANAGER', branchname :'AREA BUSINESS HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ABM-STARTUP PORTFOLIO RELATIONSHIP MANAGER', branchname :'BRANCH HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ABM-STARTUP PORTFOLIO RELATIONSHIP MANAGER', branchname :'BRANCH HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 'ABM-STARTUP PORTFOLIO RELATIONSHIP MANAGER', branchname :'BRANCH HEAD' ,branchcode :'Retail Branch Vertical' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 14, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 15, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 16, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 17, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 18, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  }, {branchid : 1, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 19, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 20, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 21, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 22, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 23, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 24, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 25, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 26, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 27, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 28, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 29, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 30, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 31, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-    {branchid : 32, branchname :'Hadapsar' ,branchcode :'HDR' , branchcity :'PUNE' , branchaddress:'SN. 295, Plot No.13, Opp A M College, Mahadev Nagar , Hadapsar, Pune:411028'  },
-   ]
+  public tasks: TaskAppointmentModel[] = [];
+public setViews : View[] = ["Day" , "Week" , "Month", "Year"] ;
+
+constructor(private apiservice : ApiService) {}
+OnInit(){
+
+  this.apiservice.getTask().subscribe((resp : any)=>
+  {
+    console.log('Tasks retrieved successfully', resp.data);
+    this.tasks = resp.data ;
+         
+  }, (error: any) =>{
+    console.log('Error retrieving tasks', error);
+    
+  }
+  )
+
 }
 
-applyFilter(): void {
-  const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.dataarray];
-  this.dataarray = filteredData.filter((data) =>
-    data.branchname.toLowerCase().includes(searchString) ||
-    data.branchcode.toLowerCase().includes(searchString) ||
-    data.branchcity.toLowerCase().includes(searchString) ||
-    data.branchaddress.toLowerCase().includes(searchString)
+
+
+
+@ViewChild('schedule') public scheduleObj: any;
+
+public data: Record<string, any>[] = [];
+
+public fields: Record<string, any> = { dataSource: this.data };
+
+public editorTemplate: string = '<div class="custom-event-editor">' +
+  '<div class="form-group">' +
+  '<label for="description">Description</label>' +
+  '<input type="text" id="description" name="description" class="e-field e-input">' +
+  '</div>' +
+  '<div class="form-group">' +
+  '<label for="employeeId">Employee ID</label>' +
+  '<input type="number" id="employeeId" name="employeeId" class="e-field e-input">' +
+  '</div>' +
+  '<div class="form-group">' +
+  '<label for="taskDate">Task Date</label>' +
+  '<input type="date" id="taskDate" name="taskDate" class="e-field e-input">' +
+  '</div>' +
+  '<div class="form-group">' +
+  '<label for="dueDate">Due Date</label>' +
+  '<input type="date" id="dueDate" name="dueDate" class="e-field e-input">' +
+  '</div>' +
+  '<div class="form-group">' +
+  '<label for="type">Type</label>' +
+  '<input type="text" id="type" name="type" class="e-field e-input">' +
+  '</div>' +
+  // '<div class="form-group">' +
+  // '<button type="submit" class="e-btn" >Save</button>' +
+  // '<button type="reset" class="e-btn">Cancel</button>' +
+  // '</div>' +
+  '</div>';
+
+
+public eventSettings: EventSettingsModel = { dataSource: this.data };
+
+
+
+
+
+
+onActionComplete(args: ActionEventArgs): void {
+  if (args.requestType === 'eventCreated' && Array.isArray(args.data)) {
+  console.log('response*******' , args.data[0]);
+  
+    const newTask = args.data[0]; 
+    this.addTask(newTask);
+  }
+  // console.log("rrrr", task)
+  // this.addTask(task)
+}
+
+
+addTask(task: any): void {
+  console.log('Task data before API call:', task);
+  this.apiservice.addTask(task).subscribe(
+    (resp: any) => {
+      console.log('Task added successfully', resp);
+    },
+    (error: any) => {
+      console.error('Error adding task', error);
+    }
   );
 }
-refreshCountries() {
-  this.countries = this.dataarray
-    .map((country, i) => ({id: i + 1, ...country}))
-    .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-}
+// addTask(task: TaskAppointmentModel): void {
+//   this.apiservice.addTask().subscribe((resp: any)=>{
+//     console.log(resp.data);
+//         Swal.fire({
+//           title: "Record Saved!",
+//           icon: "success"
+//         });
+//       },
+//       (error:any)=>{
+//         console.error(error);
+//         Swal.fire({
+//           title: "Error!",
+//           icon: "error"
+//         });
+//       }
+  
+  
+//   )
+// }
 
 
-changeTab(tabId: string) {
-  this.activeTab = tabId;
-}
 
-switchTabBasedOnId(id: string) {
-  if (id === 'tab1') {
-    this.activeTab = 'tab1';
-  } else if (id === 'tab2') {
-    this.activeTab = 'tab2';
-  }else if (id === 'tab3') {
-    this.activeTab = 'tab3';
-  }else if (id === 'tab4') {
-    this.activeTab = 'tab4';
-  }else if (id === 'tab5') {
-    this.activeTab = 'tab5';
-  }
-  // else if (id === 'tab3') {
-  //   this.activeTab = 'tab3';
-  // }else if (id === 'tab3') {
-  //   this.activeTab = 'tab3';
-  // }
-}
 }

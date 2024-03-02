@@ -5,8 +5,8 @@ import{HttpClient} from '@angular/common/http'
 })
 export class ApiService {
   
-  baseUrl="https://clientportal.promunim.com/auth";
-  // baseUrl="http://localhost:8181/auth";
+  // baseUrl="https://clientportal.promunim.com/auth";
+  baseUrl="http://localhost:8181/auth";
   
   constructor(private http : HttpClient) { }
 
@@ -371,8 +371,24 @@ export class ApiService {
     }
 
 
+    gethierarchy():any
+    {
+      return this.http.get(`${this.baseUrl}/org-hierarchy`);
+    }
+   
+    /************************************** FOR Task & Appointment COMPONENT ***************************************/
 
 
+    addTask(data:any):any
+    {
+      return this.http.post(`${this.baseUrl}/add-task`,data);
+    }
+
+
+    getTask():any
+    {
+      return this.http.get(`${this.baseUrl}/get-employee-tasks`);
+    }
 
   /************************************** FOR ALL NEW CUSTOMERS COMPONENT ***************************************/
 

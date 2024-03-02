@@ -21,6 +21,7 @@ export class AllTransactionsComponent {
   page = 1;
   pageSize = 10 ;
   AllTransactionList: AllTransactionModel[] = [];
+  originalAllTransactionList : AllTransactionModel[] = [] ;
   currentPage: number = 1;
   countries: AllTransactionModel[] | undefined;
   collectionSize =0;
@@ -53,7 +54,8 @@ onSubmit(){
   this.showtable =! this.showtable;
   this.apiService.allTransactionReport(this.transactionForm.value).subscribe(
     (responce:any)=>{
-      this.AllTransactionList=responce.data;
+      this.originalAllTransactionList=responce.data;
+      this.AllTransactionList = this.originalAllTransactionList ;
       console.log('val',responce.data);
       this.collectionSize = responce.data.length
     },
@@ -65,8 +67,8 @@ onSubmit(){
 
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.AllTransactionList];
-  this.AllTransactionList = filteredData.filter((data) =>
+  // const filteredData = [...this.AllTransactionList];
+  this.AllTransactionList = this.originalAllTransactionList.filter((data) =>
     data.CompanyName.toLowerCase().includes(searchString) ||
     // data.amount.toLowerCase().includes(searchString) ||
     data.paymentMode.toLowerCase().includes(searchString) ||

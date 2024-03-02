@@ -23,6 +23,7 @@ export class NewCustomersComponent {
   custForm1 !: FormGroup;
   products:ProductsModel[]=[];
   temCustomerList:NewCustomerModel[]=[];
+  originalCustomerList : NewCustomerModel[] = [] ;
   selecteddata : any ;
 
   permissions: any;
@@ -81,7 +82,8 @@ export class NewCustomersComponent {
 
     this.apiService.allTempCustomers().subscribe(
       (responce:any)=>{
-        this.temCustomerList=responce.data;
+        this.originalCustomerList=responce.data;
+        this.temCustomerList = this.originalCustomerList ;
         this.collectionSize = responce.data.length;
         console.log('val', responce.data);
         console.log('set',responce.data[0].tempCustFullName )
@@ -161,8 +163,8 @@ ShowDetails(data : any){
 }
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.temCustomerList];
-  this.temCustomerList = filteredData.filter((data) =>
+  // const filteredData = [...this.temCustomerList];
+  this.temCustomerList = this.originalCustomerList.filter((data) =>
     data.tempCustCompanyName.toLowerCase().includes(searchString) ||
     data.tempCustFullName.toLowerCase().includes(searchString) ||
     data.tempCustContactNo.toLowerCase().includes(searchString) ||

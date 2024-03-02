@@ -19,6 +19,7 @@ export class AllDailyVisitComponent {
   collectionSize = 100;
   dailyvisitssearch !: FormGroup;
   visitList:AllDailyVisitModel[] = [];
+  originalvisitList : AllDailyVisitModel[] = [] ;
   branches:BranchModel[]=[];
 
   permissions: any;
@@ -56,7 +57,8 @@ export class AllDailyVisitComponent {
 
     this.service.alldailyVisits().subscribe(
       ( data: any) => {
-        this.visitList=data.data;
+        this.originalvisitList=data.data;
+        this.visitList = this.originalvisitList ;
         console.log('Response successful!',data.data);
         this.collectionSize= data.data.length ;
       },
@@ -82,8 +84,8 @@ export class AllDailyVisitComponent {
 
   applyFilter(): void {
     const searchString = this.SearchText.toLowerCase();
-    const filteredData = [...this.visitList];
-    this.visitList = filteredData.filter((data) =>
+    // const filteredData = [...this.visitList];
+    this.visitList = this.originalvisitList.filter((data) =>
       data.company_name.toLowerCase().includes(searchString) ||
       data.cust_name.toLowerCase().includes(searchString) ||
       data.branch.toLowerCase().includes(searchString) ||

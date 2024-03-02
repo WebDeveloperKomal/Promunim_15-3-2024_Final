@@ -118,7 +118,7 @@
                   Showing {{(page - 1) * pageSize + 1}} to {{(page * pageSize < complaintList.length) ? page * pageSize :
                     complaintList.length}} of {{complaintList.length}} entries </div>
                     <ngb-pagination  [collectionSize]="collectionSize" [(page)]="page"
-                    [pageSize]="pageSize"
+                    [pageSize]="pageSize" [maxSize]="5"
                       aria-label="Default pagination"></ngb-pagination>
                    </div>
         </div>

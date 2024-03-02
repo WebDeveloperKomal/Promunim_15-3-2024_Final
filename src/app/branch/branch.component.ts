@@ -19,6 +19,7 @@ export class BranchComponent {
   countries: BranchModel[] | undefined;
   collectionSize =100;
   branchList:BranchModel[] = [];
+  originalBranchList: BranchModel[] = []; 
   branch: BranchModel = new BranchModel();
   
   permissions: any;
@@ -51,10 +52,15 @@ export class BranchComponent {
       console.log('No permissions data found.');
     };
 
+this.allbranch();
+   
+  }
 
+  allbranch(){
     this.service.allBranches().subscribe(
       ( data: any) => {
-        this.branchList=data.data;
+        this.originalBranchList=data.data;
+        this.branchList = this.originalBranchList;
         this.collectionSize = data.data.length ;
         console.log('Response successful!');
       },
@@ -105,12 +111,12 @@ export class BranchComponent {
   applyFilter(): void {
     const searchString = this.SearchText.toLowerCase().trim();
   
-    if (!searchString) {
-      this.branchList = this.branchList; // Assuming you have a copy of the original data
-      return;
-    }
+    // if (!searchString) {
+    // this.allbranch();
+    //   return;
+    // }
   
-    this.branchList = this.branchList.filter((data) =>
+    this.branchList = this.originalBranchList.filter((data) =>
       data.branchName.toLowerCase().includes(searchString) ||
       data.branchCode.toLowerCase().includes(searchString) ||
       data.branchCity.toLowerCase().includes(searchString) ||

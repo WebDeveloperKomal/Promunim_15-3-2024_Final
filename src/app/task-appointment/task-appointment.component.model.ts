@@ -1,7 +1,7 @@
 export class TaskAppointmentModel{
-    branchid : any;
-    branchname: any;
-    branchcode: any;
-    branchcity: any;
-    branchaddress: any;
+    description : any;
+    employeeId: any;
+    taskDate: any;
+    dueDate: any;
+    type: any;
 }

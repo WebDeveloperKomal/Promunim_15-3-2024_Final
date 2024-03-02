@@ -25,6 +25,7 @@ export class DepartmentComponent {
   countries:DepartmentModel [] | undefined;
   collectionSize =100;
   departmentList:DepartmentModel[]=[];
+  OriginaldepartmentList : DepartmentModel[] = [];
 
   permissions: any;
   Perstring:any;
@@ -55,9 +56,17 @@ export class DepartmentComponent {
       console.log('No permissions data found in local storage.');
     };
 
+    this.alldepartment();
+
+  }
+
+  alldepartment(){
+    
     this.apiService.allDepartments().subscribe(
       (response:any)=>{
-        this.departmentList=response.data;
+        this.OriginaldepartmentList =response.data;
+        this.departmentList = this.OriginaldepartmentList ;
+
         this.collectionSize = response.data.length
       },
       (error:any)=>{
@@ -110,13 +119,9 @@ export class DepartmentComponent {
 
 
   applyFilter(): void {
-    if(!this.SearchText){
-     this.departmentList = [...this.departmentList]
-     return ;
-    }
-   
+    
    const searchstring = this.SearchText.toLowerCase();
-   this.departmentList = this.departmentList.filter((data) =>
+   this.departmentList = this.OriginaldepartmentList.filter((data) =>
       data.departmentName.toLowerCase().includes(searchstring)||
       data.mainDepName.toLowerCase().includes(searchstring)
    

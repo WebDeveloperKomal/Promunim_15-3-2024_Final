@@ -66,6 +66,7 @@ import { SetComponent } from './set/set.component';
 import { ViewBranchComponent } from './view-branch/view-branch.component';
 import { AuthGuard } from './auth.guard';
 import { ViewComplianceComponent } from './view-compliance/view-compliance.component';
+import { DemoComponent } from './demo/demo.component';
 // import { ViewCustomerDetailsNewComponent } from './view-customer-details-new/view-customer-details-new.component';
 
 
@@ -226,7 +227,7 @@ const routes: Routes = [
     { path: "view-news-alert/:id", component: ViewNewsAlertComponent , canActivate:[AuthGuard] },
     { path: "change-password", component: ChangePasswordComponent , canActivate:[AuthGuard] },
 
-  
+    { path: "demo", component: DemoComponent , canActivate:[AuthGuard] },
     ],
   },
 

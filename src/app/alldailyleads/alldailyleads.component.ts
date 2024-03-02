@@ -19,6 +19,7 @@ export class AlldailyleadsComponent {
   countries: AllDailyLeadsModel[] | undefined;
   collectionSize =100;
   leadsList:AllDailyLeadsModel[] = [];
+  OriginalLeadsList: AllDailyLeadsModel[] = [] ;
   dailyleadform !: FormGroup;
   branches:BranchModel[]=[];
 
@@ -58,7 +59,8 @@ ngOnInit(){
 
   this.service.alldailyLead().subscribe(
     ( data: any) => {
-      this.leadsList=data.data;
+      this.OriginalLeadsList=data.data;
+      this.leadsList = this.OriginalLeadsList ;
       console.log('Response successful!', data.data);
       this.collectionSize = data.data.length;
     },
@@ -86,7 +88,7 @@ edit(id:any){
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
   const filteredData = [...this.leadsList];
-  this.leadsList = filteredData.filter((data) =>
+  this.leadsList = this.OriginalLeadsList.filter((data) =>
     data.company_name.toLowerCase().includes(searchString) ||
     data.cust_name.toLowerCase().includes(searchString) ||
     data.branch.toLowerCase().includes(searchString) ||
@@ -107,7 +109,9 @@ onSubmit(){
   
   this.service.Searchleaddetails(this.dailyleadform.value).subscribe(
     (responce:any)=>{
-      this.leadsList=responce.data;
+      this.OriginalLeadsList=responce.data;
+      this.leadsList = this.OriginalLeadsList ;
+
       console.log('val',responce.data);
     },
     (error:any)=>{

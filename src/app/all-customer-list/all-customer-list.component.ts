@@ -27,6 +27,7 @@ export class AllCustomerListComponent {
   deps:DepartmentModel[] = [];
 
   allCust:AllCustomerListModel[]=[];
+  originalallCust : AllCustomerListModel[] = [] ;
 
   constructor(private formBuilder: FormBuilder , private api:ApiService , private router:Router ) {
     this.employeeForm = this.formBuilder.group({
@@ -41,7 +42,9 @@ export class AllCustomerListComponent {
 ngOnInit(){
   this.api.allCustomer().subscribe(
     ( data: any) => {
-      this.allCust=data.data;
+      
+      this.originalallCust = data.data;
+      this.allCust = this.originalallCust ;
       this.collectionSize = data.data.length;
       console.log('Response successful Customer!',data.data);
       // localStorage.setItem('tid', data.data[0].tId);
@@ -59,14 +62,16 @@ edit(id : any){
 }
 
 applyFilter(): void {
-  // const searchString = this.SearchText.toLowerCase();
+  const searchString = this.SearchText.toLowerCase();
   // const filteredData = [...this.dataarray];
-  // this.dataarray = filteredData.filter((data) =>
-  //   data.branchname.toLowerCase().includes(searchString) ||
-  //   data.branchcode.toLowerCase().includes(searchString) ||
-  //   data.branchcity.toLowerCase().includes(searchString) ||
-  //   data.branchaddress.toLowerCase().includes(searchString)
-  // );
+  this.allCust = this.originalallCust.filter((data) =>
+    data.companyName.toLowerCase().includes(searchString) ||
+    data.customerFullName.toLowerCase().includes(searchString) ||
+    data.branch.toLowerCase().includes(searchString) ||
+    (data.customerId !== null && !isNaN(data.customerId) && data.customerId.toString().includes(searchString)) ||
+    (data.accountNo !== null && !isNaN(data.accountNo) && data.accountNo.toString().includes(searchString))
+    // data.branchaddress.toLowerCase().includes(searchString)
+  );
 }
 refreshCountries() {
   // this.countries = this.dataarray

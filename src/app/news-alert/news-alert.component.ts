@@ -18,7 +18,7 @@ export class NewsAlertComponent {
   countries: NewsalertModel[] | undefined;
   collectionSize = 100;
   NewsAlertList: NewsalertModel[] = [];
-
+  originalNewsAlertList : NewsalertModel[] = [] ;
   permissions: any;
   Perstring:any;
   insertalert!:boolean;
@@ -52,7 +52,8 @@ export class NewsAlertComponent {
 
     this.api.allNewsAlert().subscribe(
       (data: any) => {
-        this.NewsAlertList = data.data;
+        this.originalNewsAlertList = data.data;
+        this.NewsAlertList = this.originalNewsAlertList ;
         console.log('Response successful!',data.data);
         this.collectionSize = data.data.length;
       },
@@ -100,8 +101,8 @@ export class NewsAlertComponent {
 
   applyFilter(): void {
     const searchString = this.SearchText.toLowerCase();
-    const filteredData = [...this.NewsAlertList];
-    this.NewsAlertList = filteredData.filter((data) =>
+    // const filteredData = [...this.NewsAlertList];
+    this.NewsAlertList = this.originalNewsAlertList.filter((data) =>
       // (data.date !== null && !isNaN(data.date) && data.date.toString().includes(searchString)) ||
       data.subject.toLowerCase().includes(searchString) ||
       data.description.toLowerCase().includes(searchString) 

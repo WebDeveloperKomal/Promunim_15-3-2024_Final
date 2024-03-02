@@ -7,6 +7,12 @@ import { EmployeeModel } from '../employee/employee.component.model';
 import { SecurityService } from '../security.service';
 import Swal from 'sweetalert2';
 import { PermissionsModel } from '../login/permissionsModel';
+import { ConnectorModel, DataBinding, Diagram, HierarchicalTree, LayoutModel, NodeModel } from '@syncfusion/ej2-angular-diagrams';
+import { DataManager } from '@syncfusion/ej2-data';
+Diagram.Inject(DataBinding,HierarchicalTree);
+export interface EmployeeInfo{
+  Name : String ;
+}
 
 @Component({
   selector: 'app-user-role-permission',
@@ -34,8 +40,10 @@ export class UserRolePermissionComponent {
   showdata3 : boolean = false;
 
   RolesList:UserRolePermissionModel[]=[];
+  OriginalRoleList :UserRolePermissionModel[] = [] ;
   allDepartments:DepartmentModel[]=[];
   allEmployees:EmployeeModel[]=[];
+  OriginalallEmployees : EmployeeModel[] = [] ;
   allPermissionTypes=[{
     permissionId: 0,
     permissionTypeId: 0,
@@ -78,7 +86,45 @@ export class UserRolePermissionComponent {
   viewRM!:boolean;
   viewbranch!:boolean;
   viewall!:boolean;
+  hierarchyData: string[][] = [];
 
+  
+public employeeData : Object[] = [
+  {Name: "Sona" , Role: "director1" },
+  {Name: "Sona1" , Role: "director2" },
+  {Name: "Sona2" , Role: "director3" },
+  {Name: "Sona34" , Role: "director4" },
+  {Name: "Sona5" , Role: "director5" },
+  {Name: "Sona6" , Role: "director6" },
+  {Name: "Sona7" , Role: "director7" },
+
+]
+public layOutSetting : LayoutModel = {
+  type : 'OrganizationalChart'
+}
+// defaultconnector : any;
+// public defaultConnectorValues(defaultconnector : ConnectorModel) : ConnectorModel{
+//   defaultconnector.type = "Orthogonal" ;
+//   return defaultconnector ;
+//   defaultconnector.style ={
+//     strokeColor: "#6f409f" , strokeWidth: 2
+//   }
+//   defaultconnector.targetDecorator = { style: {fill: '#6f409f' , strokeColor: '#6f409f'}}
+// }
+  // deafaultnode: any;
+// public deafaultNodeValues(deafaultnode : NodeModel) :NodeModel{
+//   deafaultnode.height =50 ;
+//   deafaultnode.width = 100;
+//   this.deafaultnode.annotations = [
+//     {
+// content : (deafaultnode.data as EmployeeInfo).Name , style : {color : "white"}
+//     }
+//   ];
+//   deafaultnode.style = {
+//     fill: '#048785' , strokeColor : "Transparent" , strokeWidth : 1
+//   }
+//   return deafaultnode;
+// }
   constructor(private formBuilder: FormBuilder, private apiService:ApiService, private service:SecurityService) {
     this.updaterole = this.formBuilder.group({
       parentRoleId: ['', Validators.required], // Add validation if needed
@@ -112,7 +158,10 @@ export class UserRolePermissionComponent {
     };
 
     this.apiService.allRoles().subscribe(
-      (res:any)=>{this.RolesList = res.data
+      (res:any)=>{
+        
+      this.OriginalRoleList = res.data;
+      this.RolesList = this.OriginalRoleList ;
       this.collectionSize = res.data.length;
       },
       (err:any)=>{console.error(err);
@@ -130,9 +179,26 @@ export class UserRolePermissionComponent {
       }
     );
     this.service.allEmployees().subscribe(
-      (res:any)=>{this.allEmployees = res.data;
-      },
+      (res:any)=>{
+        this.OriginalallEmployees = res.data;
+        this.allEmployees = this.OriginalallEmployees ;
+       },
       (err:any)=>{console.error(err);
+      }
+    );
+
+    
+    this.apiService.gethierarchy().subscribe(
+      (response : any) => {
+        if (response.status) {
+          // Assuming your response structure is like { "data": "[[\"Super Admin\", \"Super Admin\"],[\"Super Admin\", \"Admin\"]]", "status": true }
+          this.hierarchyData = JSON.parse(response.data);
+        } else {
+          console.error('Error: API returned false status');
+        }
+      },
+      (error : any) => {
+        console.error('Error fetching hierarchy:', error);
       }
     );
   }
@@ -266,8 +332,8 @@ export class UserRolePermissionComponent {
 
   applyFilter(): void {
     const searchString = this.SearchText.toLowerCase();
-    const filteredData = [...this.RolesList];
-    this.RolesList = filteredData.filter((data) =>
+    // const filteredData = [...this.RolesList];
+    this.RolesList = this.OriginalRoleList.filter((data) =>
       data.departmentName.toLowerCase().includes(searchString) ||
       data.parentId.toLowerCase().includes(searchString) ||
       data.roleName.toLowerCase().includes(searchString) 
@@ -346,8 +412,8 @@ export class UserRolePermissionComponent {
 
 applyFilter1(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.allEmployees];
-  this.allEmployees = filteredData.filter((data) =>
+  // const filteredData = [...this.allEmployees];
+  this.allEmployees = this.OriginalallEmployees.filter((data) =>
     data.firstName.toLowerCase().includes(searchString) ||
     data.middleName.toLowerCase().includes(searchString) ||
     data.lastName.toLowerCase().includes(searchString) ||
@@ -384,5 +450,12 @@ shownewrole(){
 shownewrole1(){
   this.showdata2 = !this.showdata2;
   this.showdata3 = !this.showdata3
+}
+
+
+public jsonDataSourceSetting : Object={
+ id: "name",
+//  parentId :
+dataSource : new DataManager(this.employeeData as JSON[])
 }
 }

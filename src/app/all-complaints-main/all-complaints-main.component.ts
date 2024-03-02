@@ -18,6 +18,7 @@ export class AllComplaintsMainComponent {
   countries: AllCOmplaintsMainModel[] | undefined;
   collectionSize =100;
   complaintList:AllCOmplaintsMainModel[] = [];
+  originalcomplaintList : AllCOmplaintsMainModel[] = [] ;
   users : any;
 
   
@@ -61,7 +62,8 @@ ngOnInit(){
   this.api.allCustomerComplaint().subscribe(
     ( data: any) => {
 
-      this.complaintList=data.data;
+      this.originalcomplaintList=data.data;
+      this.complaintList = this.originalcomplaintList ;
       console.log('Response successful!', data.data);
       this.collectionSize = data.data.length;
     },
@@ -72,8 +74,8 @@ ngOnInit(){
 }
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.complaintList];
-  this.complaintList = filteredData.filter((data) =>
+  // const filteredData = [...this.complaintList];
+  this.complaintList = this.originalcomplaintList.filter((data) =>
 
   (data.complaintId !== null && !isNaN(data.complaintId) && data.complaintId.toString().includes(searchString)) ||
   (data.ticketId !== null && !isNaN(data.ticketId) && data.ticketId.toString().includes(searchString)) ||

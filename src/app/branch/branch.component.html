@@ -142,10 +142,20 @@
                   <ngb-pagination
                   [collectionSize]="collectionSize"
                   [(page)]="page"
+                  [maxSize]="5"
                   [pageSize]="pageSize"
                   (pageChange)="refreshCountries()"
                     aria-label="Default pagination"></ngb-pagination>
-              </div>
+
+
+                    <!-- <ngb-pagination
+                    [collectionSize]="collectionSize"
+                    [(page)]="page"
+                    [maxSize]="5"
+                    [rotate]="true"
+                    [ellipses]="true"
+                  ></ngb-pagination> -->
+                  </div>
             </div>
           </div>
         <!-- </div> -->

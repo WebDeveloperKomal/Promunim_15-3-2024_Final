@@ -21,6 +21,7 @@ export class AllComplaintsComponent {
   page = 1;
   pageSize = 10 ;
   AllComplaintsList: AllInteractionModel[] = [];
+  originalAllComplaintsList : AllInteractionModel[] = [] ;
   currentPage: number = 1;
   collectionSize =0;
   InteractionForm !: FormGroup;
@@ -79,7 +80,8 @@ onSubmit(){
   this.showtable =! this.showtable;
   this.apiService.allComplaintsReport(this.InteractionForm.value).subscribe(
     (responce:any)=>{
-      this.AllComplaintsList=responce.data;
+      this.originalAllComplaintsList=responce.data;
+      this.AllComplaintsList = this.originalAllComplaintsList ;
       console.log('val',responce.data);
       this.collectionSize = responce.data.length ;
     },
@@ -91,8 +93,8 @@ onSubmit(){
 
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.AllComplaintsList];
-  this.AllComplaintsList = filteredData.filter((data) =>
+  // const filteredData = [...this.AllComplaintsList];
+  this.AllComplaintsList = this.originalAllComplaintsList.filter((data) =>
     data.empName.toLowerCase().includes(searchString) ||
     data.followupByWhom.toLowerCase().includes(searchString) ||
     data.custName.toLowerCase().includes(searchString) ||

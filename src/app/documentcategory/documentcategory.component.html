@@ -90,8 +90,8 @@
                   aria-live="polite">
                   Showing {{(page - 1) * pageSize + 1}} to {{(page * pageSize < DocumentCategoriesList.length) ? page * pageSize :
                     DocumentCategoriesList.length}} of {{DocumentCategoriesList.length}} entries </div>
-                    <ngb-pagination [pageSize]="25" [collectionSize]="collectionSize" [(page)]="page"
-                    [pageSize]="pageSize"
+                    <ngb-pagination  [collectionSize]="collectionSize" [(page)]="page"
+                    [pageSize]="pageSize" [maxSize]="5"
                       aria-label="Default pagination"></ngb-pagination>
   
                 </div>

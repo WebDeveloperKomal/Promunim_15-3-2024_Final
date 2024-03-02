@@ -100,8 +100,8 @@
               <div class="dataTables_info mt-3" id="branch_datatable_info" role="status"
                 aria-live="polite">
                 Showing {{(page - 1) * pageSize + 1}} to  {{ (page * pageSize < departmentList.length) ? page * pageSize : departmentList.length }} of {{departmentList.length}} entries </div>
-                  <ngb-pagination [pageSize]="25" [collectionSize]="collectionSize" [(page)]="page"
-                  [pageSize]="pageSize"
+                  <ngb-pagination  [collectionSize]="collectionSize" [(page)]="page"
+                  [pageSize]="pageSize" [maxSize]="5"
                     aria-label="Default pagination"></ngb-pagination>
 
               </div>

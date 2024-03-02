@@ -141,7 +141,7 @@
               Showing {{(page - 1) * pageSize + 1}} to {{(page * pageSize < NewsAlertList.length) ? page * pageSize :
                 NewsAlertList.length}} of {{NewsAlertList.length}} entries </div>
                 <ngb-pagination  [collectionSize]="collectionSize" [(page)]="page"
-                [pageSize]="pageSize"
+                [pageSize]="pageSize" [maxSize]="5"
                   aria-label="Default pagination"></ngb-pagination>
   
             </div>

@@ -103,7 +103,7 @@
                 Showing {{(page - 1) * pageSize + 1}} to {{(page * pageSize < ProductFeeList.length) ? page * pageSize :
                   ProductFeeList.length}} of {{ProductFeeList.length}} entries </div>
                   <ngb-pagination [pageSize]="25" [collectionSize]="collectionSize" [(page)]="page"
-                  [pageSize]="pageSize"
+                  [pageSize]="pageSize" [maxSize]="5"
                     aria-label="Default pagination"></ngb-pagination>
 
               </div>

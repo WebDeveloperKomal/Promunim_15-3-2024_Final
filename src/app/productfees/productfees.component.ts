@@ -19,6 +19,7 @@ export class ProductfeesComponent {
   collectionSize =100;
   userRole:any;
   ProductFeeList:ProductFeesModel[]=[];
+  OriginalProductFeesList : ProductFeesModel[] = [] ;
 
   permissions: any;
   Perstring:any;
@@ -49,18 +50,24 @@ ngOnInit(){
     console.log('No permissions data found in local storage.');
   };
 
-  this.apiService.allProductfees().subscribe(
-  (response:any)=>{
-    this.ProductFeeList = response.data;
-    this.collectionSize = response.data.length;
-   
-  },
-  (error:any)=>{
-    console.error(error);
-  }
-  )
+  this.allProductFees() ;
 }
 
+
+allProductFees(){
+  
+  this.apiService.allProductfees().subscribe(
+    (response:any)=>{
+      this.OriginalProductFeesList = response.data;
+      this.ProductFeeList = this.OriginalProductFeesList ;
+      this.collectionSize = response.data.length;
+     
+    },
+    (error:any)=>{
+      console.error(error);
+    }
+    )
+}
 
 edit(id:any){
   this.router.navigate(['/set/view-product-fees/'+id]);
@@ -106,8 +113,8 @@ delete(id:any){
 
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.ProductFeeList];
-  this.ProductFeeList = filteredData.filter((data) =>
+  // const filteredData = [...this.ProductFeeList];
+  this.ProductFeeList = this.OriginalProductFeesList.filter((data) =>
     data.productName.toLowerCase().includes(searchString) ||
     data.areaType.toLowerCase().includes(searchString) ||
     (data.productId !== null && !isNaN(data.productId) && data.productId.toString().includes(searchString)) ||

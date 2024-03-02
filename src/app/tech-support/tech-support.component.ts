@@ -20,6 +20,7 @@ export class TechSupportComponent {
   collectionSize =100;
   id!:number;
   techSupportList:TechSupportModel[] = [];
+  originaltechSupportList : TechSupportModel[] = [] ;
 
     
   permissions: any;
@@ -59,8 +60,8 @@ ngOnInit(){
 
   this.api.allTechSupport().subscribe(
     ( data: any) => {
-
-      this.techSupportList=data.data;
+     this.originaltechSupportList=data.data;
+     this.techSupportList = this.originaltechSupportList
       console.log('Response successful!', data.data);
       this.collectionSize = data.data.length;
     },
@@ -73,8 +74,8 @@ ngOnInit(){
 
 applyFilter(): void {
   const searchString = this.SearchText.toLowerCase();
-  const filteredData = [...this.techSupportList];
-  this.techSupportList = filteredData.filter((data) =>
+  // const filteredData = [...this.techSupportList];
+  this.techSupportList = this.originaltechSupportList.filter((data) =>
   // (data.date !== null && !isNaN(data.date) && data.date.toString().includes(searchString)) ||
   (data.ticketId !== null && !isNaN(data.ticketId) && data.ticketId.toString().includes(searchString)) ||
     data.subject.toLowerCase().includes(searchString) ||

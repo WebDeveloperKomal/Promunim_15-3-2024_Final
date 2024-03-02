@@ -19,6 +19,7 @@ export class CourierdetailsComponent {
   collectionSize =100;
   userRole:any;
   couriorList:courierdetailsModel[]=[];
+  OriginalCourierList : courierdetailsModel[] =[] ;
 
   permissions: any;
   Perstring:any;
@@ -49,9 +50,18 @@ export class CourierdetailsComponent {
       console.log('No permissions data found in local storage.');
     };
 
+
+    this.allCourier() ;
+    
+  }
+
+
+
+  allCourier(){
     this.apiService.allCouriors().subscribe(
       (response:any)=>{
-        this.couriorList=response.data;
+        this.OriginalCourierList=response.data;
+        this.couriorList = this.OriginalCourierList ;
         this.collectionSize = response.data.length;
       },
       (error:any)=>{
@@ -102,8 +112,8 @@ export class CourierdetailsComponent {
 
   applyFilter(): void {
     const searchString = this.SearchText.toLowerCase();
-    const filteredData = [...this.couriorList];
-    this.couriorList = filteredData.filter((data) =>
+    // const filteredData = [...this.couriorList];
+    this.couriorList = this.OriginalCourierList.filter((data) =>
       data.name.toLowerCase().includes(searchString) ||
       data.address.toLowerCase().includes(searchString) ||
       data.phoneNo.toLowerCase().includes(searchString) ||

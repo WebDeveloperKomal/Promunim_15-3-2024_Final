@@ -28,6 +28,7 @@ export class EmployeeComponent {
   employeeForm !: FormGroup;
   employeeForm1 !: FormGroup;
   EmployeesList:EmployeeModel[]=[];
+  originalEmployeesList: EmployeeModel[] = [];
   employee:EmployeeModel = new EmployeeModel();
   EmployeeData:AddEmployeeModel = new AddEmployeeModel();
   empPhoto!: File;
@@ -47,7 +48,7 @@ export class EmployeeComponent {
   viewRM!:boolean;
   viewbranch!:boolean;
   viewall!:boolean;
-
+  maxSize: number = 6;
   onFileSelected(event:any) {
     this.empPhoto = event.target.files[0];
   }
@@ -98,7 +99,8 @@ export class EmployeeComponent {
     this.service.allEmployees().subscribe(
       (response:any)=>{
         console.log(response.data);        
-        this.EmployeesList=response.data;
+        this.originalEmployeesList =response.data;
+        this.EmployeesList = this.originalEmployeesList ;
         this.collectionSize = response.data.length;
       },
       (error:any)=>{
@@ -206,27 +208,45 @@ export class EmployeeComponent {
 //   );
 // }
 
-applyFilter(): void {
-  if (!this.SearchText) {
+// applyFilter(): void {
+//   if (!this.SearchText) {
     
-    this.EmployeesList = [...this.EmployeesList];
-    return;
-  }
-  const searchString = this.SearchText.toLowerCase();
-  this.EmployeesList = this.EmployeesList.filter((data) =>
-  (data.empCode !== null && !isNaN(data.empCode) && data.empCode.toString().includes(searchString)) ||
+//     this.EmployeesList = [...this.EmployeesList];
+//     return;
+//   }
+//   const searchString = this.SearchText.toLowerCase();
+//   this.EmployeesList = this.EmployeesList.filter((data) =>
+//   (data.empCode !== null && !isNaN(data.empCode) && data.empCode.toString().includes(searchString)) ||
 
+//     data.firstName.toLowerCase().includes(searchString) ||
+//     data.middleName.toLowerCase().includes(searchString) ||
+//     data.lastName.toLowerCase().includes(searchString) ||
+//     (data.contactNo !== null && !isNaN(data.contactNo) && data.contactNo.toString().includes(searchString)) ||
+//      data.branchName.toLowerCase().includes(searchString) ||
+//      data.depName.toLowerCase().includes(searchString) ||
+//        data.mainDepName.toLowerCase().includes(searchString) ||
+//          data.roleName.toLowerCase().includes(searchString) 
+//   );
+
+    
+// }
+
+
+applyFilter(): void {
+ 
+
+  const searchString = this.SearchText.toLowerCase();
+  this.EmployeesList = this.originalEmployeesList.filter((data) =>
+    (data.empCode !== null && !isNaN(data.empCode) && data.empCode.toString().includes(searchString)) ||
     data.firstName.toLowerCase().includes(searchString) ||
     data.middleName.toLowerCase().includes(searchString) ||
     data.lastName.toLowerCase().includes(searchString) ||
     (data.contactNo !== null && !isNaN(data.contactNo) && data.contactNo.toString().includes(searchString)) ||
-     data.branchName.toLowerCase().includes(searchString) ||
-     data.depName.toLowerCase().includes(searchString) ||
-       data.mainDepName.toLowerCase().includes(searchString) ||
-         data.roleName.toLowerCase().includes(searchString) 
+    data.branchName.toLowerCase().includes(searchString) ||
+    data.depName.toLowerCase().includes(searchString) ||
+    data.mainDepName.toLowerCase().includes(searchString) ||
+    data.roleName.toLowerCase().includes(searchString)
   );
-
-    
 }
 
 refreshCountries() {
@@ -285,6 +305,8 @@ triggerFileInput(): void {
   }
 }
 
-
+showEllipsis(): boolean {
+  return this.collectionSize > this.maxSize;
+}
 
 }

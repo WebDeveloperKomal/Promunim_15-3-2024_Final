@@ -96,7 +96,7 @@
                 Showing {{(page - 1) * pageSize + 1}} to {{(page * pageSize < servicesList.length) ? page * pageSize :
                   servicesList.length}} of {{servicesList.length}} entries </div>
                   <ngb-pagination [collectionSize]="collectionSize" [(page)]="page"
-                  [pageSize]="pageSize"
+                  [pageSize]="pageSize" [maxSize]="5"
                     aria-label="Default pagination"></ngb-pagination>
 
               </div>
