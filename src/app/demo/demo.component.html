@@ -1,7 +1,7 @@
 
 <!-- [getConnectorDefaults]="defaultConnectorValues"  [getNodeDefaults]="deafaultNodeValues" [layout]="layOutSetting"  [dataSourceSettings]="jsonDataSourceSetting"-->
 <!-- <ejs-diagram width="100%" height="850px"  -->
-  >
+  <!-- > -->
   <!-- <e-nodes>
     <e-nodes id="node1" >
 
@@ -14,5 +14,20 @@
     <!-- <e-diagram-annotation [content]='content'></e-diagram-annotation> -->
   <!-- </e-diagram-annotations> -->
 <!-- </ejs-diagram> -->
-
-<ejs-diagram [nodes]='nodes' [connectors]='connectors'></ejs-diagram>
+<!-- [nodes]='nodes' [connectors]='connectors' -->
+<!-- <ejs-diagram  ></ejs-diagram> -->
+<div class="content-wrapper  mt-3" style="width: 100%;">
+  <ejs-diagram
+    #diagram
+    id="diagram"
+    width="100%"
+    height="499px"
+    [getConnectorDefaults]="connDefaults"
+    [getNodeDefaults]="nodeDefaults"
+    [layout]="layout"
+    [dataSourceSettings]="dataSourceSettings"
+    [snapSettings]="snapSettings"
+    [tool]="tools"
+  >
+  </ejs-diagram>
+</div>

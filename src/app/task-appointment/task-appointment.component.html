@@ -492,7 +492,7 @@
       </div>
    -->
    <!-- [views]="setViews" (actionComplete)="onActionComplete($event)" -->
- <ejs-schedule (actionComplete)="onActionComplete($event)" [editorTemplate]="editorTemplate">
+ <!-- <ejs-schedule (actionComplete)="onActionComplete($event)" [editorTemplate]="editorTemplate">
 <e-views>
   <e-view option="Day" class="eview"></e-view>
   <e-view option="Week" class="eview"></e-view>
@@ -500,4 +500,9 @@
   <e-view option="Year" class="eview"></e-view>
 </e-views>
   
- </ejs-schedule>
+ </ejs-schedule> -->
+
+ <!-- your-component.component.html -->
+
+<ejs-schedule [eventSettings]="{dataSource: tasks}" [editorTemplate]="editorTemplate"  (actionBegin)="onActionBegin($event)"></ejs-schedule>
+<!-- <button (click)="addTask()">Add New Event</button> -->
