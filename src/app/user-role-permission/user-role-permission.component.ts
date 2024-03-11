@@ -13,6 +13,7 @@ Diagram.Inject(DataBinding,HierarchicalTree);
 export interface EmployeeInfo{
   Name : String ;
 }
+declare var google: any;
 
 @Component({
   selector: 'app-user-role-permission',
@@ -86,7 +87,8 @@ export class UserRolePermissionComponent {
   viewRM!:boolean;
   viewbranch!:boolean;
   viewall!:boolean;
-  hierarchyData: string[][] = [];
+  // hierarchyData: string[][] = [];
+  hierarchyData: any;
 
   
 public employeeData : Object[] = [
@@ -187,20 +189,21 @@ public layOutSetting : LayoutModel = {
       }
     );
 
+
+    this.generateOrgHierarchy() ;
     
-    this.apiService.gethierarchy().subscribe(
-      (response : any) => {
-        if (response.status) {
-          // Assuming your response structure is like { "data": "[[\"Super Admin\", \"Super Admin\"],[\"Super Admin\", \"Admin\"]]", "status": true }
-          this.hierarchyData = JSON.parse(response.data);
-        } else {
-          console.error('Error: API returned false status');
-        }
-      },
-      (error : any) => {
-        console.error('Error fetching hierarchy:', error);
-      }
-    );
+    // this.apiService.gethierarchy().subscribe(
+    //   (response : any) => {
+    //     if (response.status) {
+    //       this.hierarchyData = JSON.parse(response.data);
+    //     } else {
+    //       console.error('Error: API returned false status');
+    //     }
+    //   },
+    //   (error : any) => {
+    //     console.error('Error fetching hierarchy:', error);
+    //   }
+    // );
   }
 
 
@@ -458,4 +461,44 @@ public jsonDataSourceSetting : Object={
 //  parentId :
 dataSource : new DataManager(this.employeeData as JSON[])
 }
+
+
+
+generateOrgHierarchy(): void {
+  this.apiService.gethierarchy().subscribe(
+    (response: any) => {
+      this.hierarchyData = response.data;
+      // this.drawOrgChart();
+    },
+    (error : any) => {
+      console.error('Error fetching org hierarchy', error);
+    }
+  );
+}
+// drawOrgChart(): void {
+//   google.charts.load('current', { packages: ['orgchart'] });
+//   google.charts.setOnLoadCallback(() => {
+//     const el = document.getElementById('orgchart');
+
+//     if (el) {
+//       const orgChart = new google.visualization.OrgChart(el);
+
+      // Add options object with any desired configuration
+      // const options = {
+      //   allowHtml: true, // Customize as needed
+      // };
+
+      // const data = new google.visualization.DataTable();
+      // data.addColumn('string', 'Role');
+      // data.addColumn('string', 'ParentRole');
+      // data.addRows(JSON.parse(this.hierarchyData));
+
+      // Pass the options object as the second argument
+//       orgChart.draw(data, options);
+//     } else {
+//       console.error('Element with ID "orgchart" not found');
+//     }
+//   });
+// }
+
 }

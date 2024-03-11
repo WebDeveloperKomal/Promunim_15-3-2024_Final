@@ -106,7 +106,7 @@ public diagram: DiagramComponent | undefined;
      { id: 47, Label: 'DEPUTY MARKETING MANAGER', parentId: 27},
      { id: 48, Label: 'DEPUTY GENERAL MANAGER FINANCE', parentId: 28},
      { id: 49, Label: 'INFORMATION SYSTEM MANAGER', parentId: 29},
-     { id: 50, Label: 'REGULATORY RISK-COMPLIANCE MANAGER', parentId: 30},
+     { id: 50, Label: 'REGULATORY RISK COMPLIANCE MANAGER', parentId: 30},
      { id: 51, Label: 'SERVICE QUALITY MANAGER-QIG', parentId: 31},
      { id: 52, Label: 'HR MANAGER', parentId: 32},
      { id: 53, Label: 'ADMINISTRATIVE MANAGER', parentId: 34},
@@ -164,7 +164,7 @@ public diagram: DiagramComponent | undefined;
      { id: 98, Label: 'ACCOUNTS MANAGER', parentId: 78},
      { id: 99, Label: 'COMPLIANCE MANAGER', parentId: 79},
 
-     { id: 100, Label: 'BRANCH MANAGER-ENTERPRISE PORTFOLIO RELATIONSHIP MANAGER', parentId: 80},
+     { id: 100, Label: 'BRANCH MANAGER ENTERPRISE PORTFOLIO RELATIONSHIP MANAGER', parentId: 80},
     { id: 101, Label: 'BRANCH RELATIONSHIP OFFICER', parentId: 81},
     { id: 102, Label: 'TEAM LEADER DIRECT SALES', parentId: 82},
     { id: 103, Label: 'ALTERNATE SALES DEVELOPMENT OFFICER', parentId: 83},
@@ -190,7 +190,7 @@ public diagram: DiagramComponent | undefined;
     { id: 120, Label: 'BRANCH OPERATIONS MANAGER', parentId: 100},
     { id: 121, Label: 'SALES ASSOCIATE' , parentId: 101},
     { id: 122, Label: 'TELECALLER DIRECT SALES', parentId: 102},
-    { id: 123, Label: 'DEPUTY BUSINESS ADVISERASSOCIATE', parentId: 103},
+    { id: 123, Label: 'DEPUTY BUSINESS ADVISER ASSOCIATE', parentId: 103},
 
     { id: 124, Label: 'MARKETING TRAINEE', parentId: 105},
     { id: 125, Label: 'ASSISTANT COLLECTION MANAGER-CAD' , parentId: 106},
@@ -201,7 +201,7 @@ public diagram: DiagramComponent | undefined;
     { id: 130, Label: 'HR TRAINEE', parentId: 111},
     { id: 131, Label: 'ADMINISTRATIVE TRAINEE', parentId: 112},
 
-    { id: 132, Label: 'MARKETING TRAINEEASSISTANT MANAGER - DVU', parentId: 113},
+    { id: 132, Label: 'MARKETING TRAINEE ASSISTANT MANAGER - DVU', parentId: 113},
     { id: 133, Label: 'ASSISTANT CAPITAL MANAGER' , parentId: 114},
     { id: 134, Label: 'ASSISTANT INVESTMENT ADVISER', parentId: 115},
     { id: 135, Label: 'ASSISTANT BUSINESS ADVISER', parentId: 116},
@@ -241,7 +241,7 @@ public dataSourceSettings: Object = {
   parentId: 'parentId',
   dataSource: this.items,
   doBinding: (nodeModel: NodeModel, data: object, diagram: Diagram) => {
-    debugger
+    
     nodeModel.shape = {
       type: 'Text',
       content: (data as any).Label,
@@ -253,40 +253,40 @@ public snapSettings: SnapSettingsModel = {
 };
 public layout: Object = {
   type: 'HierarchicalTree',
-  // verticalSpacing: 30, horizontalSpacing: 40,
+  verticalSpacing: 30, 
+  horizontalSpacing: 2,
       enableAnimation: true
 };
 public nodeDefaults(obj: NodeModel): NodeModel {
   if((obj.data as any).id === 1 ){
     obj.style = { fill: '#FFFFFF', strokeColor: 'none', color: '#004C8C' , fontSize : 13 ,   };
-    // obj.borderColor = '#3BB161';
+    
     obj.backgroundColor = '#3BB161'; 
     obj.height = 35 ;
   
-    
+    obj.addInfo = { src: 'assets/Logo.png', margin: { top: 5 } };
    }
  else if((obj.data as any).id === 2 ||(obj.data as any).id === 3 ||(obj.data as any).id === 4 ) {
   obj.style = { fill: '#FFFFFF', strokeColor: 'none', color: '#004C8C' , fontSize : 11 ,   };
-  // obj.borderColor = '#3BB161';
+ 
   obj.backgroundColor = '#3BB161'; 
   obj.width = 100 ;
   obj.height = 35 ;
-  // obj.cornerRadius = { topLeft: 10, topRight: 10, bottomLeft: 10, bottomRight: 10 }; // Set rounded corners
  }
-//  else if((obj.data as any).id === 4||(obj.data as any).id === 5 ||(obj.data as any).id === 14 ||(obj.data as any).id === 15||(obj.data as any).id ===16||(obj.data as any).id ===20||(obj.data as any).id ===21) {
-//     obj.style = { fill: '#17a573', strokeColor: 'none', color: 'white', strokeWidth: 2 };
-//     obj.borderColor = '#17a573';
-//     obj.backgroundColor = '#17a573';
-//  }
+ else if((obj.data as any).id === 100 )  {
+  obj.style = { fill: '#FFFFFF', strokeColor: 'none', color: '#004C8C',fontSize : 10 ,  };
+  obj.backgroundColor = '#3BB161';
+  obj.width = 85;
+   obj.height = 70 ;
+}
+
  else {
     obj.style = { fill: '#FFFFFF', strokeColor: 'none', color: '#004C8C',fontSize : 10 ,  };
-    // obj.borderColor = '#73bb34';
     obj.backgroundColor = '#3BB161';
-    obj.width = 75;
+    obj.width = 85;
+     obj.height = 65 ;
  }
-// obj.width = 75;
 
-// obj.height =35;
 (obj.shape as any).margin = { left: 1, right: 1, bottom: 1, top: 1 };
 return obj;
 }

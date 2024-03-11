@@ -62,7 +62,8 @@ this.allbranch();
         this.originalBranchList=data.data;
         this.branchList = this.originalBranchList;
         this.collectionSize = data.data.length ;
-        console.log('Response successful!');
+        console.log('Response successful!' ,data.data);
+        console.log('Response successful!' ,data.data[0].branchCity);
       },
       (error:any) => {
         console.error('API Error:', error);

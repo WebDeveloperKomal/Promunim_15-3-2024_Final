@@ -24,7 +24,7 @@ export class AddBranchComponent {
       address: ['', Validators.required],
       latitude: ['', Validators.required],
       longitude: ['', Validators.required]   
-    });
+    }); 
   }
 
   

@@ -379,9 +379,9 @@ export class ApiService {
     /************************************** FOR Task & Appointment COMPONENT ***************************************/
 
 
-    addTask(data:any):any
+    addTask(newevent:any):any
     {
-      return this.http.post(`${this.baseUrl}/add-task`,data);
+      return this.http.post(`${this.baseUrl}/add-task`,newevent);
     }
 
 

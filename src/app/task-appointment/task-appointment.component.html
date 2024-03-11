@@ -504,5 +504,116 @@
 
  <!-- your-component.component.html -->
 
-<ejs-schedule [eventSettings]="{dataSource: tasks}" [editorTemplate]="editorTemplate"  (actionBegin)="onActionBegin($event)"></ejs-schedule>
-<!-- <button (click)="addTask()">Add New Event</button> -->
+<!-- <ejs-schedule [eventSettings]="{dataSource: tasks}" [editorTemplate]="editorTemplate"  (actionBegin)="onActionBegin($event)"></ejs-schedule> -->
+<!-- <button (click)="addTask()">Add New Event</button> --> 
+<!-- [(selectedDate)]="selectedDate" -->
+      <!-- <ejs-schedule   [eventSettings]="eventSettings" (popupOpen)="onPopupOpen($event)"
+      (actionComplete)="onActionComplete($event)" >
+      <ng-template #eventSettingsTemplate let-data>
+        <div> -->
+          <!-- <div class="subject">{{data.Subject}}</div> -->
+          <!-- <div class="subject">{{data.title}}</div>
+          
+          <div class="time"> -->
+            <!-- Time: {{data.StartTime.toISOString()}} -
+            {{data.EndTime.toISOString()}} -->
+
+            <!-- Time: {{data.startTime}} -
+            {{data.endTime}}
+
+          </div>
+        </div>
+      </ng-template>
+    </ejs-schedule> -->
+<!--[eventSettings]="eventSettings"  (actionComplete)="onActionComplete($event)" (popupOpen)="onPopupOpen($event)" -->
+    <ejs-schedule [eventSettings]="eventSettings" [editorTemplate]="editorTemplate">
+        <e-views>
+            <e-view option="Day" class="eview"></e-view>
+            <e-view option="Week" class="eview"></e-view>
+            <e-view option="Month" class="eview"></e-view>
+            <e-view option="Year" class="eview"></e-view>
+          </e-views>
+
+           <!-- <e-resources>
+            <e-resource field="OwnerId" title="Owner" name="Owners"
+            [dataSource]="ownerDataSource"
+            textField="text" idField="id" colorField="color">
+            </e-resource>
+        </e-resources> -->
+
+          <ng-template #editorTemplate let-data>
+            <form class="col-md-12 col-sm-12 col-xs-12 mt-2 pt-3">
+                <div class="row">
+              <div class="form-group col-md-5 mb-3">
+                <!-- <div class="form-floating col-12 col-lg-5"> -->
+                <label for="branchname" class="col-lg-2 col-4 col-form-label">Description</label>
+                <input id="branchname" type="text" [(ngModel)]="newevent.description"  [ngModelOptions]="{standalone: true}"  class="form-control order-secondary rounded-3">
+              </div>
+              <div class="form-group col-md-5 mb-3">
+                <label for="branchname" class="col-lg-6 col-6 col-form-label">Employee Id</label>
+                <input id="branchname" type="text" [(ngModel)]="newevent.employeeId"  [ngModelOptions]="{standalone: true}"  class="form-control order-secondary rounded-3">
+              </div>
+            </div>
+        <!-- </div> -->
+            
+             
+          <div class="row">
+              <div class="form-group col-md-5 mb-3">
+                <label for="pincode" class="col-lg-5 col-5 col-form-label">Task Date:</label>
+                <input type="date" class="form-control" [(ngModel)]="newevent.taskDate"  [ngModelOptions]="{standalone: true}">
+              </div>
+              <div class="form-group col-md-5 mb-3">
+                <label for="pincode" class="col-lg-4 col-5 col-form-label">Due Date:</label>
+                <input type="date" class="form-control" [(ngModel)]="newevent.dueDate"  [ngModelOptions]="{standalone: true}">
+              </div>
+              <!-- <div class="form-group col-md-5 mb-3">
+                <label for="pincode" class="col-lg-4 col-4 col-form-label">Due Date:</label>
+                <input type="date" [(ngModel)]="newevent.dueDate"  [ngModelOptions]="{standalone: true}" id="complianceName">
+              </div> -->
+        </div>
+        <div class="row">
+              <div class="form-group col-md-10  mb-3">
+                <label for="city" class="col-lg-2 col-4 col-form-label">Type</label>
+                <input type="text" class="form-control" [(ngModel)]="newevent.type"  [ngModelOptions]="{standalone: true}">
+              </div>
+            </div>
+              <div class="text-center">
+                <button type="button" class="col-3 btn btn-info m-lg-2 m-4" (click)="addTask()" style="height: 36px;">
+                  Submit
+                </button>
+                <button type="reset" class="col-3 btn btn-info m-lg-2 m-4" style="height: 36px;">Cancel <i class="ace-icon fa fa-undo bigger-110"></i></button>
+              </div>
+            </form>
+          </ng-template>
+          
+
+            
+        <!-- <ng-template #eventSettingsTemplate let-data>
+          <div>
+            <div class="subject">{{ data.title }}</div>
+            <div class="time">
+              Time: {{ data.startTime | date: 'shortTime' }} - {{ data.endTime | date: 'shortTime' }}
+            </div>
+          </div>
+          </ng-template>  -->
+          <!-- <ng-template  #editorTemplate let-data >
+            <table class="costum-event-editor" width="100%" >
+                <tbody>
+                    <tr>
+                        <td>
+                            <input id="subject" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                        <ejs-datetimepicker format="yyyy/dd/mm"  ></ejs-datetimepicker>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+          </ng-template> -->
+      
+      </ejs-schedule>

@@ -5,3 +5,13 @@
     Comfortaa;
     /* padding: 20px; */
 }
+/* 
+#diagram::-webkit-scrollbar {
+    display: none;
+  } */
+    
+  /* Hide scrollbar for IE, Edge and Firefox */
+  /* #diagram {
+  -ms-overflow-style: none;  
+  scrollbar-width: none;  
+  } */

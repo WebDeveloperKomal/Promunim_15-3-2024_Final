@@ -82,7 +82,8 @@ import { ViewCustomerDetailsNewComponent } from './view-customer-details-new/vie
 import {DiagramModule} from '@syncfusion/ej2-angular-diagrams';
 import { DemoComponent } from './demo/demo.component';
 import { ScheduleModule, RecurrenceEditorModule, DayService , WeekService,WorkWeekService,MonthService,MonthAgendaService, DragAndDropService, ResizeService, YearService } from '@syncfusion/ej2-angular-schedule'
-
+// import { GoogleCharts } from 'google-charts';
+import{DateTimePickerModule} from '@syncfusion/ej2-angular-calendars'
 @NgModule({
   declarations: [
     AppComponent,
@@ -165,7 +166,8 @@ import { ScheduleModule, RecurrenceEditorModule, DayService , WeekService,WorkWe
     NgbModule,HttpClientModule,
     CarouselModule.forRoot(),
     DiagramModule,
-    ScheduleModule, RecurrenceEditorModule
+    ScheduleModule, RecurrenceEditorModule,
+    DateTimePickerModule
     // NgbModule.forRoot()
   ],
   providers: [AuthInterceptorProviders,DatePipe ,DayService , WeekService,WorkWeekService, MonthService,MonthAgendaService, DragAndDropService, ResizeService,YearService ],
