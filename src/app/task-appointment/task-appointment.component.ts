@@ -6,6 +6,7 @@ import{L10n} from '@syncfusion/ej2-base'
 import { ApiService } from '../api.service';
 import Swal from 'sweetalert2';
 import { DataManager, ODataV4Adaptor } from '@syncfusion/ej2-data';
+import { data } from 'jquery';
 
 L10n.load({
   'en-US' : {
@@ -26,6 +27,10 @@ dateparser(arg0: any) {
 throw new Error('Method not implemented.');
 }
   public tasks: TaskAppointmentModel[] = [];
+  // public eventSettings: EventSettingsModel = {};
+  // public dataManager: DataManager = new DataManager();
+
+  
   private dataManager: DataManager = new DataManager({
     url: 'https://ej2services.syncfusion.com/production/web-services/api/Schedule',
     // url: 'http://localhost:8181/auth/get-employee-tasks',
@@ -35,42 +40,25 @@ throw new Error('Method not implemented.');
  });
 
 
-//  console.log("dat", this.dataManager);
- 
- public eventSettings: EventSettingsModel = { dataSource: this.dataManager
 
+ 
+ public eventSettings: EventSettingsModel = { 
+  dataSource: this.dataManager , 
+  // fields : { subject : {'title'} ,
+
+  //  }  // fields :{
+  //   subject : {name:'title' , default : 'Hello ENvironment' , title : 'Enter Title' } ,
+  //   startTime : {name : 'startTime'},
+  //   endTime : {name : 'endTime'}
+  //     }
 
   // allowAdding: true,
   // eventTemplate: this.eventTemplate.bind(this)
   
 
 };
-
-public eventTemplate(props: any): string {
-  // Check if the event is added (you can modify this condition based on your logic)
-  if (props.EventType === 'Add') {
-    return 'green'; // Set the background color to green
-  }
-  return ''; // Default background color for other events
-}
-// 
- 
-  // tasks = TaskAppointmentModel = TaskAppointmentModel()
-  // schedulerData = {
-  //   dataSource: this.tasks,
-  //   fields: {
-  //     id: { name: 'id', title: 'Task ID' },
-  //     dueDate: { name: 'dueDate', title: 'Due Date' },
-  //     endTime: { name: 'endTime', title: 'End Time' },
-  //     allDay: { name: 'allDay', title: 'All Day' },
-  //   },
-  // };               
-  newevent : TaskAppointmentModel = new TaskAppointmentModel() ;
-  // newEvent: any = {description: this.newEvent.description,
-  //   employeeId: this.newEvent.employeeId,
-  //  taskDate: this.newEvent.taskDate,
-  //   dueDate: this.newEvent.dueDate,
-  //   type: this.newEvent.type};
+newevent : TaskAppointmentModel = new TaskAppointmentModel() ;
+  
 public setViews : View[] = ["Day" , "Week" , "Month", "Year"] ;
 public showQuickInfo: Boolean = false;
 // eventSettings: { dataSource: Object[] } = { dataSource: [] };
@@ -81,91 +69,98 @@ public showQuickInfo: Boolean = false;
 //   crossDomain: true
 // });
 
-// public eventSettings: EventSettingsModel = {
-//   dataSource: [],
-//   fields: {
-   
-
-//     id: 'Id',
-//     subject: { name: 'title', title: 'Event Name' },
-   
-//     description: { name: 'description', title: 'Event Description' },
-//     startTime: { name: 'startTime', title: 'Start Duration' },
-//     endTime: { name: 'sndTime', title: 'End Duration'  }
-// }
-
-    // this.tasks 
-    // {
-
-      // id : 1 ,
-      // dueDate : any ;
-      // endTime: new Date(2020, 9, 30, 14, 50),
-      // allDay : any,
-      // title:  this.tasks  ,
-      // startTime: new Date(2020, 9, 30, 14, 0), 
-      // status : any 
-      // Id: 1 ,
-      // Subject: "Testing Event",
-      // StartTime: new Date(2020, 9, 30, 14, 0),
-      // EndTime: new Date(2020, 9, 30, 14, 50),
-      // RecurrenceRule: "FREQ=WEEKLY;BYDAY=FR;INTERVAL=1;",
-      // RecurrenceException: "20201106T130000Z"
-    // }
-  
-// };
-
-constructor(private apiservice : ApiService) {
-  // this.newevent = new TaskAppointmentModel();
-}
+constructor(private apiservice : ApiService) {}
 ngOnInit(){
-  // this.newevent = new TaskAppointmentModel();
+  
  this.fetchScheduleData() ;
-// console.log("*************",this.eventSettings.dataSource);
-console.log('rrrrrrrrrrrr' , this.dataManager);
+
+// console.log('rrrrrrrrrrrr' , this.dataManager);
 
 }
 
-fetchScheduleData(){
-  this.apiservice.getTask().subscribe((resp : any)=>
-  {
-    console.log('Tasks retrieved successfully', resp.data);
-    // console.log('Tasks retrieved successfully **************', resp.data[0].title);
-    // data.insertedBy.employeeId title
-    // this.eventSettings.dataSource = resp.data 
-    // .map((task: any) => ({
-    //   id: task.id,
-    //   allDay: task.allDay,
-    //   dueDate: new Date(task.dueDate),
-    //   endTime: new Date(task.endTime),
-    //   insertedBy: task.insertedBy,
-    //   startTime: new Date(task.startTime),
-    //   status: task.status,
-    //   title: task.title
-    // }));
 
-    // this.eventSettings.dataSource = resp.data;
-    // console.log('Tasks retrieved successfully**********', this.eventSettings.dataSource);
-    this.tasks = resp.data ;
-    // this.eventSettings.dataSource = this.tasks;
-    this.dataManager = resp.data    
-    console.log('Tasks retrieved successfully sssssssssss', this.tasks);
-    // this.schedulerData.dataSource = this.tasks;
-         
-    // this.eventSettings.dataSource = resp.data.map((task: any) => ({
-    //   id: task.id,
-    //   dueDate: task.dueDate,
-    //   endTime: new Date(task.endTime),
-    //   allDay: task.allDay,
-    //   title: task.title,
-    //   startTime: new Date(task.startTime),
-    //   status: task.status
-    // }));
-  }, (error: any) =>{
-    console.log('Error retrieving tasks', error);
+// fetchScheduleData(){
+//   this.apiservice.getTask().subscribe((resp : any)=>
+//   {
+//     console.log('Tasks retrieved successfully', resp.data);
     
-  }
+//     this.tasks = resp.data ;
+    
+//     this.dataManager = resp.data    
+//     console.log('Tasks retrieved successfully sssssssssss', this.tasks);
+   
+//   }, (error: any) =>{
+//     console.log('Error retrieving tasks', error);
+    
+//   }
+//   )
+// }
+addTask(): void {
+  console.log("data", this.newevent)
+  this.apiservice.addTask(this.newevent).subscribe((resp: any)=>{
+    console.log(resp.data);
+        // Swal.fire({
+        //   title: "Task Added !",
+        //   icon: "success"
+        // }); 
+
+        setTimeout(() => {
+          // Close the popup
+          // this.isPopupOpen = false; // Assuming you have a variable to control the popup's visibility
+          Swal.fire({
+            title: "Task Added !",
+            icon: "success"
+          });
+        }, 0);
+        this.fetchScheduleData() ;
+      },
+      (error:any)=>{
+        console.error(error);
+        Swal.fire({
+          title: "Error!",
+          icon: "error"
+        });
+      }
+  
+  
   )
+} 
+
+fetchScheduleData() {
+  this.apiservice.getTask().subscribe(
+    (resp: any) => {
+      console.log('Tasks retrieved successfully', resp.data);
+
+      // Map the API response to the Syncfusion Scheduler format
+      const mappedData = resp.data.map((item: { id: any; title: any; startTime: string | number | Date; endTime: string | number | Date; allDay: any; }) => ({
+        Id: item.id,
+        Subject: item.title,
+        StartTime: new Date(item.startTime),
+        EndTime: new Date(item.endTime),
+        IsAllDay: item.allDay,
+        // Add other required fields as needed
+      }));
+      console.log('Mapped Data', mappedData);
+      
+
+      // Assign the mapped data to the DataManager instance
+      // this.dataManager = new DataManager({
+      //   json: mappedData,
+      //   adaptor: new ODataV4Adaptor(), 
+       
+      // });
+
+      // Assign the DataManager to the eventSettings
+      // this.eventSettings = { dataSource: this.dataManager };
+      // console.log('dataManagerData',this.dataManager);
+      
+    },
+    (error: any) => {
+      console.log('Error retrieving tasks', error);
+    }
+  );
 }
+
 
 // public eventSettings: EventSettingsModel = { dataSource: this.tasks ,allowAdding: true };
 
@@ -243,26 +238,6 @@ fetchScheduleData(){
 //   );
 //   }
 // }
-addTask(): void {
-  console.log("data", this.newevent)
-  this.apiservice.addTask(this.newevent).subscribe((resp: any)=>{
-    console.log(resp.data);
-        Swal.fire({
-          title: "Task Added !",
-          icon: "success"
-        });
-        this.fetchScheduleData() ;
-      },
-      (error:any)=>{
-        console.error(error);
-        Swal.fire({
-          title: "Error!",
-          icon: "error"
-        });
-      }
-  
-  
-  )
-}
+
 
 }
