@@ -34,6 +34,7 @@ export class UserRolePermissionComponent {
   countries: UserRolePermissionModel[] | undefined;
   countries1: EmployeeModel[] | undefined;
   collectionSize =100;
+  collectionSize1 =100;
   activeTab: string = 'tab1';
   showdata1 : boolean = true;
   showdata : boolean = false;
@@ -184,6 +185,7 @@ public layOutSetting : LayoutModel = {
       (res:any)=>{
         this.OriginalallEmployees = res.data;
         this.allEmployees = this.OriginalallEmployees ;
+        this.collectionSize1 = res.data.length;
        },
       (err:any)=>{console.error(err);
       }

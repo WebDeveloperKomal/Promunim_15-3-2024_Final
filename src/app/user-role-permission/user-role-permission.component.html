@@ -2425,13 +2425,14 @@ value="Add New Role" >
                               role="status" aria-live="polite">
                               Showing {{(page - 1) * pageSize + 1}} to {{(page * pageSize < allEmployees.length) ? page *
                                 pageSize : allEmployees.length}} of {{allEmployees.length}} entries </div>
-                                <ngb-pagination  [collectionSize]="collectionSize" [(page)]="page"
+                                <ngb-pagination  [collectionSize]="collectionSize1" [(page)]="page"
                               [pageSize]="pageSize" [maxSize]="5"
                                 aria-label="Default pagination"></ngb-pagination>
   
                             </div>
 
                         </div>
+                        
 
                         <div *ngIf="showdata3">
                           <button type="button" (click)="shownewrole1()" class="btn btn-info" style="float: right;border-radius: 20px">
